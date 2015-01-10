@@ -1,26 +1,21 @@
 
+
 package org.usfirst.frc.team3070.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Gyro;
-import edu.wpi.first.wpilibj.AnalogChannel;
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
- */
+import edu.wpi.first.wpilibj.AnalogInput;
+
 public class Robot extends IterativeRobot {
     Talon tall;
 	Talon talr;
 	//left and right talons
-	AnalogChannel ultra;
+	AnalogInput ultra;
 	Gyro gyro;
-	double range = ultra.getRangeMM();
-	//gets object distance in millimeters
+	double range = ultra.getVoltage();
+	//gets object distance with voltage
 	double angle = gyro.getAngle();
 	//gets angle of robot from gyro
 	/**
@@ -28,7 +23,7 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	ultra = new Ultrasonic(3,4);
+    	ultra = new AnalogInput(3);
     	tall = new Talon(0);
     	talr = new Talon(1);
     	gyro = new Gyro(2);
@@ -38,7 +33,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-    	System.out.println(range + "mm away, and" + angle + "degrees");
+    	System.out.println("voltage is" + range + "angle is" + angle);
     	//prints out both distance from object and angle
     	if(range <= 500){
     		tall.set(0.2);
